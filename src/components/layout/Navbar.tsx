@@ -24,9 +24,22 @@ export function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2">
           <div className="w-8 h-8 bg-accent flex items-center justify-center">
-            <span className="font-display font-bold text-surface-primary text-lg leading-none">
-              W
-            </span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 32 32"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 9L10 24L16 13L22 24L28 5"
+                stroke="var(--color-surface-primary)"
+                strokeWidth="3.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle cx="28" cy="5" r="2.5" fill="var(--color-surface-primary)" />
+            </svg>
           </div>
           <span className="font-display font-bold text-lg text-text-primary tracking-tight">
             Winning Trades
