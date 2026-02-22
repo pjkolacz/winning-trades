@@ -1,6 +1,7 @@
 "use server";
 
 import { emailSchema, type SubscribeResult } from "@/lib/validation";
+import { supabase } from "@/lib/supabase";
 
 export async function subscribe(
   _prevState: SubscribeResult | null,
@@ -20,11 +21,24 @@ export async function subscribe(
   const email = parsed.data;
 
   try {
-    // Log the subscription
-    console.log(`New subscriber: ${email}`);
+    const { error } = await supabase
+      .from("subscribers")
+      .insert({ email });
 
-    // TODO: Integrate with email service (Resend, ConvertKit, etc.)
-    // when ready for production
+    if (error) {
+      // Unique constraint violation — already subscribed
+      if (error.code === "23505") {
+        return {
+          success: true,
+          message: "You're already subscribed!",
+        };
+      }
+      console.error("Supabase insert error:", error);
+      return {
+        success: false,
+        message: "Something went wrong. Please try again.",
+      };
+    }
 
     return {
       success: true,
